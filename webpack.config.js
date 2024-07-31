@@ -2,7 +2,7 @@ var path = require("path");
 
 module.exports = {
   mode: "production",
-  entry: "./src/index.js",
+  entry: "./src/index.ts", // Entry file
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "index.js",
@@ -11,12 +11,19 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.tsx?$/, // Handle .ts and .tsx files
         exclude: /node_modules/,
-        loader: "babel-loader",
+        use: "ts-loader",
+      },
+      {
+        test: /\.js$/, // Optional: Handle .js files if needed
+        exclude: /node_modules/,
         use: ["babel-loader"],
       },
     ],
+  },
+  resolve: {
+    extensions: [".tsx", ".ts", ".js"], // Resolve these extensions
   },
   externals: {
     react: "react",
